@@ -118,9 +118,12 @@ export function drawGame(ctx: CanvasRenderingContext2D, gameState: GameState) {
 
   // Draw score
   ctx.fillStyle = 'white';
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
   ctx.font = '20px Arial';
   ctx.textAlign = 'left';
-  ctx.fillText(`Score: ${gameState.score}`, 10, 30);
+  ctx.strokeText(`Score: ${gameState.score}`, 10, 30);  // Draw the border first
+  ctx.fillText(`Score: ${gameState.score}`, 10, 30);    // Then fill the text
 
   // Draw game over screen
   if (gameState.gameOver) {

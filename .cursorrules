@@ -1,0 +1,17 @@
+## Development Patterns
+
+### Component Structure
+- Use functional components with TypeScript
+- Props interfaces should be prefixed with 'I'
+- Export components as named exports
+- Place components in feature-based folders
+
+### State Management
+- Use React Query for server state
+- Use Zustand for global client state
+- Prefer composition over inheritance
+
+### File Organization
+- Feature-based folder structure
+- Shared components in /components
+- Business logic in /hooks and /utils

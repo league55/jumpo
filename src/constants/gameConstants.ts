@@ -27,12 +27,10 @@ export const ANIMATION_SPEED = 8;
 export const CHARACTER_IMAGE_URL = "https://media.licdn.com/dms/image/v2/C4E03AQGouseIZW1kmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663949954599?e=2147483647&v=beta&t=iDUrYXzp0iUZ7VACFzdwT6CKTIo57-JEa-YxacjEi_I";
 
 export const VILLAGE_NAMES = [
-  "Meadowbrook",
-  "Pine Valley",
-  "Riverside",
-  "Oak Ridge",
-  "Maple Grove",
-  "Silver Creek",
-  "Willow Glen",
-  "Cedar Hills",
+  "Colonia Jardin",
+  // "Casa de Campo",
+  // "Batan",
+  // "Lago",
+  // "Principe Pio",
+  // "Plaza de España",
 ];

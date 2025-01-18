@@ -9,18 +9,42 @@ import {
   CLOUD_SPAWN_RATE,
   INITIAL_PLAYER_Y,
   GRAVITY,
-  ANIMATION_SPEED,
-  VILLAGE_NAMES,
+  ANIMATION_SPEED, 
   SIGN_WIDTH,
   CLOUD_MIN_WIDTH,
   CLOUD_MAX_WIDTH,
   CLOUD_MIN_HEIGHT,
-  CLOUD_MAX_HEIGHT
+  CLOUD_MAX_HEIGHT,
+  VILLAGE_NAMES
 } from '../constants/gameConstants';
 
 export function updateGameState(prevState: GameState, frameCount: number): GameState {
   const newVelocity = prevState.isJumping ? prevState.velocity + GRAVITY : prevState.velocity;
   const newY = prevState.playerY + newVelocity;
+
+  // Update animation frame
+  const newAnimationFrame = Math.floor(frameCount / ANIMATION_SPEED) % 4;
+
+  if(prevState.signCount === VILLAGE_NAMES.length && prevState.signs.length === 0) {
+    if(!prevState.isJumping) {
+      return {
+        ...prevState,
+        isJumping: true,
+        velocity: -8,
+        gameWon: true,
+        animationFrame: newAnimationFrame,
+      };
+    } else {
+      const hasLanded = newY >= INITIAL_PLAYER_Y;
+      return {
+        ...prevState,
+        playerY: hasLanded ? INITIAL_PLAYER_Y : newY,
+        velocity: hasLanded ? 0 : newVelocity,
+        isJumping: hasLanded ? false : true,
+        animationFrame: newAnimationFrame,
+      };
+    }
+  }
 
   // Update obstacles
   let newObstacles = prevState.obstacles
@@ -45,13 +69,17 @@ export function updateGameState(prevState: GameState, frameCount: number): GameS
     });
   }
 
+  let newSignCount = prevState.signCount;
   // Spawn new sign
   if (frameCount % SIGN_SPAWN_RATE === 0) {
-    const randomName = VILLAGE_NAMES[Math.floor(Math.random() * VILLAGE_NAMES.length)];
-    newSigns.push({
-      x: CANVAS_WIDTH,
-      name: randomName,
-    });
+    const randomName = VILLAGE_NAMES[prevState.signCount];
+    if (randomName) {
+      newSignCount++;
+      newSigns.push({
+        x: CANVAS_WIDTH,
+        name: randomName,
+      });
+    } 
   }
 
   // Spawn new cloud
@@ -66,8 +94,6 @@ export function updateGameState(prevState: GameState, frameCount: number): GameS
     });
   }
 
-  // Update animation frame
-  const newAnimationFrame = Math.floor(frameCount / ANIMATION_SPEED) % 4;
 
   // Check collisions
   if (checkCollision({ ...prevState, obstacles: newObstacles })) {
@@ -90,6 +116,7 @@ export function updateGameState(prevState: GameState, frameCount: number): GameS
       clouds: newClouds,
       score: prevState.score + 1,
       animationFrame: newAnimationFrame,
+      signCount: newSignCount,
     };
   }
 
@@ -102,5 +129,6 @@ export function updateGameState(prevState: GameState, frameCount: number): GameS
     clouds: newClouds,
     score: prevState.score + 1,
     animationFrame: newAnimationFrame,
+    signCount: newSignCount,
   };
 }

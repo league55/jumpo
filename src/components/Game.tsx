@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { drawGame } from '../utils/gameRenderer';
 import { updateGameState } from '../utils/gameLogic';
-import { GameState, INITIAL_GAME_STATE } from '../types/gameTypes';
+import { GameState, INITIAL_GAME_STATE, resetGameState } from '../types/gameTypes';
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../constants/gameConstants';
 
 export function Game() {
@@ -11,9 +11,9 @@ export function Game() {
   const gameLoopRef = useRef<number>();
 
   const handleTap = () => {
-    if (gameState.gameOver) {
-      setGameState(INITIAL_GAME_STATE);
-      frameCountRef.current = 0;
+    if (gameState.gameOver || gameState.gameWon) {
+      setGameState(prev => resetGameState(prev));
+      frameCountRef.current = -1;
       return;
     }
 
