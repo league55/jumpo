@@ -12,6 +12,9 @@ export interface GameState {
   gameWon: boolean;
   score: number;
   animationFrame: number;
+  currentLevel: number;
+  gameStarted: boolean;
+  showWelcome: boolean;
 }
 
 export const INITIAL_GAME_STATE: GameState = {
@@ -26,11 +29,16 @@ export const INITIAL_GAME_STATE: GameState = {
   gameWon: false,
   score: 0,
   animationFrame: 0,
+  currentLevel: 0,
+  gameStarted: false,
+  showWelcome: true,
 };
 
 export const resetGameState = (prevState: GameState): GameState => {
   return {
     ...INITIAL_GAME_STATE,
-    clouds: prevState.clouds
+    clouds: prevState.clouds,
+    showWelcome: false,
+    gameStarted: true
   };
 };
