@@ -24,7 +24,7 @@ export const CLOUD_MAX_HEIGHT = 50;
 export const GRAVITY = 0.5;
 export const JUMP_VELOCITY = -8;
 export const ANIMATION_SPEED = 8;
-export const CHARACTER_IMAGE_URL = "./src/97754799906.png";
+export const CHARACTER_IMAGE_URL = "/marti.jumpo/97754799906.png";
 
 export const VILLAGE_NAMES = [
   "Colonia Jardin",
